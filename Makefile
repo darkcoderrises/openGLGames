@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -std=c++11 -Wall -O3
+CFLAGS = -std=c++11 -Wall -O3 -g
 PROG = angryBirds
 
 SRCS = Board.cpp main.cpp
