@@ -8,7 +8,7 @@ void Board::makeBoard() {
     glPushMatrix();
     glTranslatef(0.0f, 0.0f, -2*(8.0f));
 
-    glColor3f(RGB_RED);
+    glColor3f(1.0f, 0.0f, 0.0f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glBegin(GL_QUADS);
 
