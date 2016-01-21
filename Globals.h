@@ -44,4 +44,9 @@
 #define MIN_ANGLE 30.0f
 #define MAX_ANGLE 70.0f
 
+#define accY 0.005;
+
+#define frictionX 0.0001;
+#define frictionY 0.0001;
+
 #endif //ANGRYBIRDS_GLOBALS_H

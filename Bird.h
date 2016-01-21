@@ -11,7 +11,15 @@ class Bird {
         Bird();
         ~Bird();
 
+        float x, y;
+        float velX, velY;
+
+        bool moving;
+
         void drawBird();
+        void moveBird();
+
+        void checkCollision();
 
 };
 

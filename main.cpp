@@ -36,8 +36,17 @@ void specialKeyPressHandler(int key, int x, int y){
         case 100:
             board->cannon.changeAngle(1.0f);
             break;
+
         case 102:
             board->cannon.changeAngle(-1.0f);
+            break;
+
+        case 101:
+            board->birds[0].moving = true;
+            break;
+
+        case 103:
+            board->birds[0].moving = false;
             break;
     }
     std::cout<<"specialKeyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;

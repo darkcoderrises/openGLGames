@@ -21,6 +21,11 @@ void Board::makeBoard() {
     a.pop();
 
     this->cannon.drawCannon();
-    this->birds[0].drawBird();
 
+    for (int i=0; i<(signed) this->birds.size(); i++){
+        this->birds[i].checkCollision();
+        this->birds[i].moveBird();
+    }
+
+    this->birds[0].drawBird();
 }
