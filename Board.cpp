@@ -6,6 +6,7 @@
 
 void Board::makeBoard() {
     DrawHelper a;
-    a.drawReact(1.0f, 0.0f, 0.0f);
-    a.drawReact(RGB_WHITE);
+    a.drawReact(RGB_RED, 0, 0);
+    a.drawReactEmpty(RGB_WHITE, 1, 1);
+    a.drawEllipse(RGB_RED, 3, 4, 1, 5);
 }

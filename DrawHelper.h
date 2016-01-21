@@ -8,7 +8,9 @@
 
 class DrawHelper {
 public:
-    void drawReact(float color1, float color2, float color3);
+    void drawReact(float color1, float color2, float color3, float x, float y);
+    void drawReactEmpty(float color1, float color2, float color3, float x, float y);
+    void drawEllipse(float color1, float color2, float color3, float x, float y, float radx, float rady);
 };
 
 
