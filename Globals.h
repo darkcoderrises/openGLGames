@@ -39,4 +39,6 @@
 
 #define FRAME_DIVISIONS 1
 
+#define BOX_SIZE 8.0f
+
 #endif //ANGRYBIRDS_GLOBALS_H

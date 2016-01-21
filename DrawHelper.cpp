@@ -5,47 +5,35 @@
 #include "DrawHelper.h"
 #include "Globals.h"
 
-void DrawHelper::drawReact(float color1, float color2, float color3, float x, float y) {
-    float size = 1, factor = 1;
-    glPushMatrix();
-    glTranslatef(x, y, -2*(8.0f));
-
+void DrawHelper::drawReact(float color1, float color2, float color3, float size) {
     glColor3f(color1, color2, color3);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glBegin(GL_QUADS);
 
-    glVertex2f(-size / factor, -size / factor);
-    glVertex2f(size  / factor, -size / factor);
-    glVertex2f(size  / factor, size  / factor);
-    glVertex2f(-size / factor, size  / factor);
+    glVertex2f(-size, -size);
+    glVertex2f(size, -size);
+    glVertex2f(size, size);
+    glVertex2f(-size, size);
 
     glEnd();
-
-    glPopMatrix();
 }
 
-void DrawHelper::drawReactEmpty(float color1, float color2, float color3, float x, float y) {
-    float size = 1, factor = 1;
-    glPushMatrix();
-    glTranslatef(x, y, -2*(8.0f));
-
+void DrawHelper::drawReactEmpty(float color1, float color2, float color3, float size) {
     glColor3f(color1, color2, color3);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glBegin(GL_QUADS);
 
-    glVertex2f(-size / factor, -size / factor);
-    glVertex2f(size  / factor, -size / factor);
-    glVertex2f(size  / factor, size  / factor);
-    glVertex2f(-size / factor, size  / factor);
+    glVertex2f(-size, -size);
+    glVertex2f(size, -size);
+    glVertex2f(size, size);
+    glVertex2f(-size, size);
 
     glEnd();
 
-    glPopMatrix();
 }
 
-void DrawHelper::drawEllipse(float color1, float color2, float color3, float x, float y, float radx, float rady) {
-    glPushMatrix();
-    glTranslatef(x, y, -2*(8.0f));
+void DrawHelper::drawEllipse(float color1, float color2, float color3, float radx, float rady) {
+
     int i;
     const float DEG2RAD = 0.01745327;
 
@@ -59,5 +47,18 @@ void DrawHelper::drawEllipse(float color1, float color2, float color3, float x, 
     }
 
     glEnd();
+
+}
+
+void DrawHelper::drawCircle(float color1, float color2, float color3, float rad) {
+    this->drawEllipse(color1, color2, color3, rad, rad);
+}
+
+void DrawHelper::push(float x, float y){
+    glPushMatrix();
+    glTranslatef(x, y, -2*(8.0f));
+}
+
+void DrawHelper::pop(){
     glPopMatrix();
 }

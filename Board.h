@@ -6,9 +6,16 @@
 #define ANGRYBIRDS_BOARD_H
 
 #include "Globals.h"
+#include "Cannon.h"
 
 class Board {
     public:
+        Board();
+        ~Board();
+
+        Cannon cannon;
+
+        void init();
         void makeBoard();
 
 };

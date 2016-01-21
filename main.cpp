@@ -81,12 +81,10 @@ int main(int argc, char **argv) {
     int w = glutGet(GLUT_SCREEN_WIDTH);
     int h = glutGet(GLUT_SCREEN_HEIGHT);
 
-    int windowWidth = w * 2 / 3;
-    int windowHeight = h * 2 / 3;
+    int windowWidth = w * 3 / 3;
+    int windowHeight = h * 3 / 3;
     glutInitWindowSize(windowWidth, windowHeight);
-    glutInitWindowPosition((w - windowWidth) / 2, (h - windowHeight) / 2);
     glutCreateWindow("Angry Birds v1.0");
-
     initRendering();
 
     // Callbacks :)
