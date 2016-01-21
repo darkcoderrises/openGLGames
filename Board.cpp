@@ -4,11 +4,9 @@
 #include "Board.h"
 #include "DrawHelper.h"
 
-void Board::init() {
-}
-
 Board::Board() {
     this->cannon = Cannon();
+    this->birds.push_back(Bird());
 }
 
 Board::~Board() {
@@ -23,5 +21,6 @@ void Board::makeBoard() {
     a.pop();
 
     this->cannon.drawCannon();
-    //this->cannon.changeAngle();
+    this->birds[0].drawBird();
+
 }

@@ -7,6 +7,8 @@
 
 #include "Globals.h"
 #include "Cannon.h"
+#include "Bird.h"
+#include <vector>
 
 class Board {
     public:
@@ -14,8 +16,8 @@ class Board {
         ~Board();
 
         Cannon cannon;
+        std::vector<Bird> birds;
 
-        void init();
         void makeBoard();
 
 };

@@ -35,14 +35,13 @@ void DrawHelper::drawReactEmpty(float color1, float color2, float color3, float 
 void DrawHelper::drawEllipse(float color1, float color2, float color3, float radx, float rady) {
 
     int i;
-    const float DEG2RAD = 0.01745327;
 
     glColor3f(color1, color2, color3);
     glBegin(GL_LINE_LOOP);
 
     for(i=0;i<360;i++)
     {
-        float rad = i*DEG2RAD;
+        float rad = DEG2RAD(i);
         glVertex2f((GLfloat) cos(rad)*radx, (GLfloat) sin(rad)*rady);
     }
 

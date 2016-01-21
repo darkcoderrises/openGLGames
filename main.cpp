@@ -32,6 +32,14 @@ void keyPressHandler(unsigned char key, int x, int y){
 void specialKeyPressHandler(int key, int x, int y){
     // called whenever special keys are pressed, with x and y as mouse pointer location.
     // key = (100 right) (101 up) (102 left) (103 down) (i Fi)
+    switch (key){
+        case 100:
+            board->cannon.changeAngle(1.0f);
+            break;
+        case 102:
+            board->cannon.changeAngle(-1.0f);
+            break;
+    }
     std::cout<<"specialKeyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
 }
 
@@ -77,6 +85,8 @@ void updateScene(int value) {
 int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+
+    board = new Board();
 
     int w = glutGet(GLUT_SCREEN_WIDTH);
     int h = glutGet(GLUT_SCREEN_HEIGHT);

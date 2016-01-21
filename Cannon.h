@@ -13,8 +13,9 @@ class Cannon {
 
         Cannon();
         ~Cannon();
+
         void drawCannon();
-        void changeAngle();
+        void changeAngle(float change);
 };
 
 

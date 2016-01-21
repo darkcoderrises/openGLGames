@@ -17,8 +17,8 @@
 #define COL_BLUE 3
 #define COL_GRAY 4
 
-#define PI 3.141592653589
-#define DEG2RAD(deg) (deg * PI / 180)
+#define PI 3.1415926f
+#define DEG2RAD(deg) (deg * PI / 180.0f)
 #define RAD2DEG(rad) (rad * 180 / PI)
 
 #define RGB_BACKGROUND 0.0f,0.0f,0.0f
@@ -40,5 +40,8 @@
 #define FRAME_DIVISIONS 1
 
 #define BOX_SIZE 8.0f
+
+#define MIN_ANGLE 30.0f
+#define MAX_ANGLE 70.0f
 
 #endif //ANGRYBIRDS_GLOBALS_H
