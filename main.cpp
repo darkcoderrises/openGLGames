@@ -23,20 +23,28 @@ void drawScene() {
     glutSwapBuffers();
 }
 
-void keypressHandler(unsigned char key, int x, int y){
-
+void keyPressHandler(unsigned char key, int x, int y){
+    // called whenever keys are pressed, with x and y as mouse pointer location.
+    // key = normal key, use switch case.
+    std::cout<<"keyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
 }
 
-void specialKeypressHandler(int key, int x, int y){
-
+void specialKeyPressHandler(int key, int x, int y){
+    // called whenever special keys are pressed, with x and y as mouse pointer location.
+    // key = (100 right) (101 up) (102 left) (103 down) (i Fi)
+    std::cout<<"specialKeyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
 }
 
 void mouseHandler(int button, int state, int x, int y){
-
+    // called whenever mouse is clicked, with x and y as mouse pointer location.
+    // button = (0 lmb) (1 mmb) (2 rmb) (3 scroll_up) (4 scroll_down)
+    // state = 0 if up, 1 if down
+    std::cout<<"mouseHandler "<<button<<" "<<state<<" "<<x<<" "<<y<<std::endl;
 }
 
 void dragHandler(int x, int y){
-
+    // called whenever mouse is being dragged each time it changes a pixel, with x and y as mouse pointer location.
+    std::cout<<"dragHandler "<<x<<" "<<y<<std::endl;
 }
 
 void resizeHandler(int w, int h) {
@@ -54,6 +62,8 @@ void updateScene(int value) {
     // precise as we update the positions slowly
     // and hence high velocities don't cause
     // us to go over each other.
+    //std::cout<<value<<std::endl;
+
     for(int i = 0; i < FRAME_DIVISIONS; i++) {
         //board->handleCollision();
         //board->updatePositions();
@@ -83,8 +93,8 @@ int main(int argc, char **argv) {
     glutDisplayFunc(drawScene);
     glutIdleFunc(drawScene);
 
-    glutKeyboardFunc(keypressHandler);
-    glutSpecialFunc(specialKeypressHandler);
+    glutKeyboardFunc(keyPressHandler);
+    glutSpecialFunc(specialKeyPressHandler);
 
     glutMouseFunc(mouseHandler);
     glutMotionFunc(dragHandler);

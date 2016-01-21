@@ -27,3 +27,5 @@ angryBirds
 *.exe
 *.out
 *.app
+
+.idea/
