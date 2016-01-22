@@ -9,11 +9,13 @@
 Bird::Bird() {
     this->x=0;
     this->y=0;
+    this->rad=0.5;
 
     this->velX = 0.05;
     this->velY = 0.05;
 
     this->moving = false;
+    this->moveable = true;
 }
 
 Bird::~Bird() {
@@ -37,19 +39,17 @@ void Bird::moveBird() {
 
     this->velY -= accY;
 
-    if (velY<0) velY+=2*frictionY; velY-=frictionY;
-    if (velX<0) velX+=2*frictionX; velX-=frictionX;
+    if (this->velY<0) this->velY+=2*frictionY; this->velY-=frictionY;
+    if (this->velX<0) this->velX+=2*frictionX; this->velX-=frictionX;
 }
 
 void Bird::checkCollision() {
-    if (this->x <= (0.5-BOX_SIZE) or this->x >= (BOX_SIZE-0.5)){
-        velX *= -1;
+    if (this->x <= (this->rad - BOX_SIZE) or this->x >= (BOX_SIZE - this->rad)){
+        this->velX *= -1;
     }
 
-    if (this->y <= (2-BOX_SIZE) or this->y >= (BOX_SIZE-2)){
-        velY *= -1;
+    if (this->onGround() or (this->y + this->rad) >= BOX_SIZE){
+        this->velY *= -1;
         this->velY -= accY;
     }
 }
-
-

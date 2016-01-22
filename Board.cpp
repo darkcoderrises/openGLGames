@@ -23,6 +23,7 @@ void Board::makeBoard() {
     this->cannon.drawCannon();
 
     for (int i=0; i<(signed) this->birds.size(); i++){
+        if (this->birds[i].onGround()) continue;
         this->birds[i].checkCollision();
         this->birds[i].moveBird();
     }

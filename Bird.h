@@ -5,13 +5,13 @@
 #ifndef ANGRYBIRDS_BIRD_H
 #define ANGRYBIRDS_BIRD_H
 
+#include "Object.h"
 
-class Bird {
+class Bird : public Object {
     public:
         Bird();
         ~Bird();
 
-        float x, y;
         float velX, velY;
 
         bool moving;
