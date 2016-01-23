@@ -12,16 +12,36 @@ void fill(std::vector<float> *color, float color1, float color2, float color3){
 Board::Board() {
     this->cannon = Cannon();
     this->birds.push_back(Bird());
+    this->birds.push_back(Bird());
+    this->birds.push_back(Bird());
+
+    for (int i=0;i<3;i++)
+        this->birds[i].setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+
     this->blocks.push_back(Blocks());
+
+    this->in_progress = false;
 
     std::vector<float> colors[3];
     fill(colors, RGB_BLUE);
     fill(colors, RGB_TRON_ORANGE);
     fill(colors, RGB_RED);
 
+    std::vector<float> colors1[3];
+    fill(colors1, RGB_WHITE);
+    fill(colors1, RGB_RED);
+    fill(colors1, RGB_BLUE);
+
+
+
     Meters power = Meters();
     power.init( -BOX_SIZE -1, -4, 1, 5, 3, 3, colors);
-    this->meters.push_back(power);
+
+    Meters life = Meters();
+    life.init( BOX_SIZE + 1, -5, 1, 3, 3, 3, colors1);
+
+    this->powerMeter = power;
+    this->lives = life;
 
 }
 
@@ -42,15 +62,27 @@ void Board::makeBoard() {
         this->blocks[i].drawBlock();
     }
 
+    bool erase = false;
+
     for (std::vector<Bird>::iterator it = this->birds.begin();  it != this->birds.end() ; it++){
-        if (it->onGround()) continue;
+        if (it->stop) {
+            this->in_progress = false;
+            erase = true;
+            this->lives.decreaseLevel();
+            continue;
+        }
+        if (!it->moving)it->setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
         it->checkCollision();
         it->moveBird();
     }
 
-    for (int i=0; i<(signed) this->meters.size(); i++){
-        this->meters[i].drawMeter();
-    }
+    if (erase)
+        this->birds.erase(this->birds.begin());
+    this->powerMeter.drawMeter();
+    this->lives.drawMeter();
 
-    this->birds[0].drawBird();
+
+    if (this->birds.size()>0)
+        this->birds[0].drawBird();
+
 }

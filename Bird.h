@@ -15,9 +15,11 @@ class Bird : public Object {
         float velX, velY;
 
         bool moving;
+        bool stop;
 
         void drawBird();
         void moveBird();
+        void setBird(float angle, float x, float y);
 
         void checkCollision();
 

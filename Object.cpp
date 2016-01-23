@@ -14,6 +14,5 @@ Object::~Object() {
 }
 
 bool Object::onGround() {
-    if ((this->y - this->rad) <= -1 * BOX_SIZE) {std::cout<<"onGround\n";}
-    return ((this->y - this->rad) == (-1*BOX_SIZE));
+    return ((this->y - this->rad) <= (errorY-BOX_SIZE));
 }

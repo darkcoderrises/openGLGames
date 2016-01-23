@@ -26,7 +26,46 @@ void drawScene() {
 void keyPressHandler(unsigned char key, int x, int y){
     // called whenever keys are pressed, with x and y as mouse pointer location.
     // key = normal key, use switch case.
-    std::cout<<"keyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
+    switch (key){
+        case ' ':
+            if (board->in_progress) break;
+
+            if (board->birds.size()>0) {
+                board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+                board->birds[0].moving = true;
+                board->in_progress = true;
+
+                board->birds[0].velX *= board->powerMeter.currLevel;
+                board->birds[0].velY *= board->powerMeter.currLevel;
+            }
+
+            break;
+
+        case 'a':
+            board->cannon.changeAngle(1.0f);
+            if (board->birds.size()>0) board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+            break;
+
+        case 'b':
+            board->cannon.changeAngle(-1.0f);
+            if (board->birds.size()>0) board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+            break;
+
+        case 's':
+            board->powerMeter.decreaseLevel();
+            break;
+
+        case 'f':
+            board->powerMeter.increaseLevel();
+            break;
+
+        case 'q':
+            exit(0);
+
+        default:
+            break;
+    }
+
 }
 
 void specialKeyPressHandler(int key, int x, int y){
@@ -34,30 +73,21 @@ void specialKeyPressHandler(int key, int x, int y){
     // key = (100 right) (101 up) (102 left) (103 down) (i Fi)
     switch (key){
         case 100:
-            board->cannon.changeAngle(1.0f);
             break;
 
         case 102:
-            board->cannon.changeAngle(-1.0f);
             break;
 
         case 101:
-            board->birds[0].moving = true;
             break;
 
         case 103:
-            board->birds[0].moving = false;
             break;
 
-        case 1:
-            board->meters[0].decreaseLevel();
-            break;
-
-        case 2:
-            board->meters[0].increaseLevel();
+        default:
             break;
     }
-    std::cout<<"specialKeyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
+    //std::cout<<"specialKeyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
 }
 
 void mouseHandler(int button, int state, int x, int y){

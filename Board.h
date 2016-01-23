@@ -17,10 +17,13 @@ class Board {
         Board();
         ~Board();
 
+        bool in_progress;
+
         Cannon cannon;
         std::vector<Bird> birds;
         std::vector<Blocks> blocks;
-        std::vector<Meters> meters;
+        Meters powerMeter;
+        Meters lives;
 
         void makeBoard();
 

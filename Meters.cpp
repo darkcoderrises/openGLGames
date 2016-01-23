@@ -57,10 +57,12 @@ void Meters::setPos(float x, float y) {
 }
 
 void Meters::decreaseLevel() {
+    if (this->currLevel == 0) return;
     this->currLevel--;
 }
 
 void Meters::increaseLevel() {
+    if (this->currLevel == this->levels) return;
     this->currLevel++;
 }
 
@@ -73,7 +75,7 @@ void Meters::drawMeter() {
 
     DrawHelper a;
     a.push(this->x, this->y);
-    a.drawRectangeEmpty(color1, color2, color3, this->length, this->breadth);
+    a.drawRectangeEmpty(1, 1, 1, this->length, this->breadth);
     a.pop();
 
     a.push(this->x, this->y - (this->breadth * (this->levels - this->currLevel) / (2 * this->levels)));
