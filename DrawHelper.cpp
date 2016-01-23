@@ -5,7 +5,7 @@
 #include "DrawHelper.h"
 #include "Globals.h"
 
-void DrawHelper::drawReact(float color1, float color2, float color3, float size) {
+void DrawHelper::drawSquare(float color1, float color2, float color3, float size) {
     glColor3f(color1, color2, color3);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glBegin(GL_QUADS);
@@ -18,21 +18,39 @@ void DrawHelper::drawReact(float color1, float color2, float color3, float size)
     glEnd();
 }
 
-void DrawHelper::drawReactEmpty(float color1, float color2, float color3, float size) {
+void DrawHelper::drawRectange(float color1, float color2, float color3, float length, float breadth) {
+    glColor3f(color1, color2, color3);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_QUADS);
+
+    length /= 2;
+    breadth /= 2;
+
+    glVertex2f(-length, -breadth);
+    glVertex2f(length, -breadth);
+    glVertex2f(length, breadth);
+    glVertex2f(-length, breadth);
+
+    glEnd();
+}
+
+void DrawHelper::drawRectangeEmpty(float color1, float color2, float color3, float length, float breadth) {
     glColor3f(color1, color2, color3);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glBegin(GL_QUADS);
 
-    glVertex2f(-size, -size);
-    glVertex2f(size, -size);
-    glVertex2f(size, size);
-    glVertex2f(-size, size);
+    length /= 2;
+    breadth /= 2;
+
+    glVertex2f(-length, -breadth);
+    glVertex2f(length, -breadth);
+    glVertex2f(length, breadth);
+    glVertex2f(-length, breadth);
 
     glEnd();
-
 }
 
-void DrawHelper::drawEllipse(float color1, float color2, float color3, float radx, float rady) {
+void DrawHelper::drawEllipse(float color1, float color2, float color3, float radX, float radY) {
 
     int i;
 
@@ -42,7 +60,7 @@ void DrawHelper::drawEllipse(float color1, float color2, float color3, float rad
     for(i=0;i<360;i++)
     {
         float rad = DEG2RAD(i);
-        glVertex2f((GLfloat) cos(rad)*radx, (GLfloat) sin(rad)*rady);
+        glVertex2f((GLfloat) cos(rad) * radX, (GLfloat) sin(rad) * radY);
     }
 
     glEnd();

@@ -6,9 +6,11 @@
 #define ANGRYBIRDS_BOARD_H
 
 #include "Globals.h"
+#include "DrawHelper.h"
 #include "Cannon.h"
 #include "Bird.h"
-#include <vector>
+#include "Blocks.h"
+#include "Meters.h"
 
 class Board {
     public:
@@ -17,6 +19,8 @@ class Board {
 
         Cannon cannon;
         std::vector<Bird> birds;
+        std::vector<Blocks> blocks;
+        std::vector<Meters> meters;
 
         void makeBoard();
 

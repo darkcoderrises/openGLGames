@@ -48,6 +48,14 @@ void specialKeyPressHandler(int key, int x, int y){
         case 103:
             board->birds[0].moving = false;
             break;
+
+        case 1:
+            board->meters[0].decreaseLevel();
+            break;
+
+        case 2:
+            board->meters[0].increaseLevel();
+            break;
     }
     std::cout<<"specialKeyPressHandler "<<key<<" "<<x<<" "<<y<<std::endl;
 }

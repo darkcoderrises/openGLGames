@@ -10,6 +10,7 @@
 #include <cmath>
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <vector>
 
 #define COL_BLACK 0
 #define COL_WHITE 1
