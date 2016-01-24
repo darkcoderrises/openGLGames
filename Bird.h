@@ -6,6 +6,7 @@
 #define ANGRYBIRDS_BIRD_H
 
 #include "Object.h"
+#include "Map.h"
 
 class Bird : public Object {
     public:
@@ -21,7 +22,7 @@ class Bird : public Object {
         void moveBird();
         void setBird(float angle, float x, float y);
 
-        void checkCollision();
+        void checkCollision(Map map);
 
 };
 

@@ -4,7 +4,6 @@
 
 #include "Bird.h"
 #include "DrawHelper.h"
-#include "Globals.h"
 
 Bird::Bird() {
     this->x=0;
@@ -38,7 +37,7 @@ void Bird::drawBird() {
 }
 
 void Bird::moveBird() {
-    if (not moving)
+    if (not this->moving)
         return;
 
     this->x += this->velX;
@@ -52,7 +51,21 @@ void Bird::moveBird() {
     if ( fabs(this->velX) < 0.0001  and this->onGround()) {this->stop = true;}
 }
 
-void Bird::checkCollision() {
+class vec2 {
+public:
+    float x,y;
+};
+
+float length_squared1(vec2 w, vec2 p){
+    return ( (w.x-p.x)*(w.x-p.x) + (w.y-p.y)*(w.y-p.y) );
+}
+
+float distance1(vec2 w, vec2 p){
+    return (float) sqrt(length_squared1(w, p));
+}
+
+
+void Bird::checkCollision(Map map) {
     if (this->x <= (0.5-BOX_SIZE) or this->x >= (BOX_SIZE-0.5)){
         this->velX *= -1;
     }
@@ -60,5 +73,23 @@ void Bird::checkCollision() {
     if (this->onGround() or (this->y + this->rad) >= BOX_SIZE){
         this->velY *= -1;
         this->velY -= accY;
+    }
+
+    if (map.checkColl(this->x, this->y, this->rad)){
+        bool check = false;
+
+        for (int i=0;i<4;i++){
+            vec2 a,b;
+            b.x = this->x, b.y = this->y;
+            a.x = map.breadths[i], a.y = map.heigths[i];
+
+            if (distance1(a, b) <= this->rad)
+                check = true;
+        }
+
+
+        velY *= -1;
+        if (check) velX *= -1;
+
     }
 }

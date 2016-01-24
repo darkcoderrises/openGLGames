@@ -11,6 +11,7 @@
 #include "Bird.h"
 #include "Blocks.h"
 #include "Meters.h"
+#include "Map.h"
 
 class Board {
     public:
@@ -24,6 +25,7 @@ class Board {
         std::vector<Blocks> blocks;
         Meters powerMeter;
         Meters lives;
+        Map map;
 
         void makeBoard();
 

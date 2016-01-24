@@ -43,6 +43,8 @@ Board::Board() {
     this->powerMeter = power;
     this->lives = life;
 
+    this->map = Map();
+
 }
 
 Board::~Board() {
@@ -58,8 +60,10 @@ void Board::makeBoard() {
 
     this->cannon.drawCannon();
 
+    this->map.drawRandom();
+
     for (int i=0; i<(signed) this->blocks.size(); i++){
-        this->blocks[i].drawBlock();
+        //this->blocks[i].drawBlock();
     }
 
     bool erase = false;
@@ -72,7 +76,9 @@ void Board::makeBoard() {
             continue;
         }
         if (!it->moving)it->setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
-        it->checkCollision();
+
+        std::cout<< this->map.checkColl(this->birds[0].x, this->birds[0].y, this->birds[0].rad) <<std::endl;
+        it->checkCollision(this->map);
         it->moveBird();
     }
 
