@@ -15,7 +15,7 @@ void drawScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
+    glScalef( board->zoom/4,board->zoom/4,1.0f );
     board->makeBoard();
 
     // performs a flush and loads
@@ -68,6 +68,15 @@ void keyPressHandler(unsigned char key, int x, int y){
 
 }
 
+void resizeHandler(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0f, (float)w / (float)h, 0.1f, 200.0f);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
 void specialKeyPressHandler(int key, int x, int y){
     // called whenever special keys are pressed, with x and y as mouse pointer location.
     // key = (100 right) (101 up) (102 left) (103 down) (i Fi)
@@ -79,9 +88,11 @@ void specialKeyPressHandler(int key, int x, int y){
             break;
 
         case 101:
-            break;
+            board->zoom += 1;
+                break;
 
         case 103:
+            board->zoom -= 1;
             break;
 
         default:
@@ -100,15 +111,6 @@ void mouseHandler(int button, int state, int x, int y){
 void dragHandler(int x, int y){
     // called whenever mouse is being dragged each time it changes a pixel, with x and y as mouse pointer location.
     std::cout<<"dragHandler "<<x<<" "<<y<<std::endl;
-}
-
-void resizeHandler(int w, int h) {
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0f, (float)w / (float)h, 0.1f, 200.0f);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
 }
 
 void updateScene(int value) {
@@ -138,8 +140,8 @@ int main(int argc, char **argv) {
     int w = glutGet(GLUT_SCREEN_WIDTH);
     int h = glutGet(GLUT_SCREEN_HEIGHT);
 
-    int windowWidth = w * 3 / 3;
-    int windowHeight = h * 3 / 3;
+    int windowWidth = w;
+    int windowHeight = h;
     glutInitWindowSize(windowWidth, windowHeight);
     glutCreateWindow("Angry Birds v1.0");
     initRendering();

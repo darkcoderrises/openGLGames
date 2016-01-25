@@ -45,6 +45,8 @@ Board::Board() {
 
     this->map = Map();
 
+    this->zoom = 4;
+
 }
 
 Board::~Board() {
@@ -77,7 +79,7 @@ void Board::makeBoard() {
         }
         if (!it->moving)it->setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
 
-        std::cout<< this->map.checkColl(this->birds[0].x, this->birds[0].y, this->birds[0].rad) <<std::endl;
+        //std::cout<< this->map.checkColl(this->birds[0].x, this->birds[0].y, this->birds[0].rad) <<std::endl;
         it->checkCollision(this->map);
         it->moveBird();
     }

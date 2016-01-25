@@ -75,7 +75,7 @@ void Bird::checkCollision(Map map) {
         this->velY -= accY;
     }
 
-    if (map.checkColl(this->x, this->y, this->rad)){
+    if (map.checkColl(this->x + this->velX, this->y + this->velY , this->rad)){
         bool check = false;
 
         for (int i=0;i<4;i++){

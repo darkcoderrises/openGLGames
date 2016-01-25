@@ -107,14 +107,20 @@ bool Map::checkColl(float x, float y, float rad) {
     bool check = false;
     for(int i=0; i<4; i++){
         float Y = this->heigths[i];
-        float X = BOX_SIZE - this->breadths[i];
+        float X = this->breadths[i];
 
-        if(y+rad >= Y-0.5 and y < Y){
+        if(y+rad >= (Y+0.5) and y < (Y+0.5)){
             if(x+rad >= X){
                 check = true;
-                break;
             }
         }
+
+        if(y-rad <= (Y-0.5) and y > (Y-0.5)){
+            if(x+rad >= X){
+                check = true;
+            }
+        }
+
     }
     return check;
 
@@ -130,5 +136,7 @@ void Map::drawRandom() {
 }
 
 Object Map::setObj() {
+    Object a = Object();
 
+    return a;
 }
