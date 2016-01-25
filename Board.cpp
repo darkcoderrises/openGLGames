@@ -45,7 +45,9 @@ Board::Board() {
 
     this->map = Map();
 
-    this->zoom = 4;
+    this->zoom = 7;
+    this->x = 0;
+    this->y = 0;
 
 }
 

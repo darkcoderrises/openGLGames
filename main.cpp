@@ -15,6 +15,7 @@ void drawScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    glTranslatef(board->x, board->y, -2*(8.0f));
     glScalef( board->zoom/4,board->zoom/4,1.0f );
     board->makeBoard();
 
@@ -26,6 +27,7 @@ void drawScene() {
 void keyPressHandler(unsigned char key, int x, int y){
     // called whenever keys are pressed, with x and y as mouse pointer location.
     // key = normal key, use switch case.
+    //std::cout <<"keyPressHandler " << key << " " << x << " " << y << std::endl;
     switch (key){
         case ' ':
             if (board->in_progress) break;
@@ -35,8 +37,8 @@ void keyPressHandler(unsigned char key, int x, int y){
                 board->birds[0].moving = true;
                 board->in_progress = true;
 
-                board->birds[0].velX *= board->powerMeter.currLevel;
-                board->birds[0].velY *= board->powerMeter.currLevel;
+                board->birds[0].velX *= board->powerMeter.currLevel * board->powerMeter.currLevel;
+                board->birds[0].velY *= board->powerMeter.currLevel * board->powerMeter.currLevel;
             }
 
             break;
@@ -59,6 +61,23 @@ void keyPressHandler(unsigned char key, int x, int y){
             board->powerMeter.increaseLevel();
             break;
 
+        case '8':
+            board->y += 1;
+            break;
+
+        case '2':
+            board->y -= 1;
+            break;
+
+        case '4':
+            board->x -= 1;
+            break;
+
+        case '6':
+            board->x += 1;
+            break;
+
+        case 'Q':
         case 'q':
             exit(0);
 
@@ -82,9 +101,11 @@ void specialKeyPressHandler(int key, int x, int y){
     // key = (100 right) (101 up) (102 left) (103 down) (i Fi)
     switch (key){
         case 100:
+            board->x -= 1;
             break;
 
         case 102:
+            board->x += 1;
             break;
 
         case 101:

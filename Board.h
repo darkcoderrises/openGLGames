@@ -19,6 +19,7 @@ class Board {
         ~Board();
 
         float zoom;
+        float x, y;
         bool in_progress;
 
         Cannon cannon;
