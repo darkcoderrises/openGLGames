@@ -13,8 +13,6 @@ class Bird : public Object {
         Bird();
         ~Bird();
 
-        float velX, velY;
-
         bool moving;
         bool stop;
 

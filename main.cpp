@@ -9,6 +9,17 @@ void initRendering() {
     glClearColor(RGB_BACKGROUND,1.0f);
 }
 
+
+void drawBitmapText(std::string string,float x,float y,float z)
+{
+    glRasterPos3f(x, y,z);
+
+    for (int i=0; i<(signed) string.length(); i++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, string[i]);
+    }
+}
+
 void drawScene() {
     // clear the matrix and
     // load the identity matrix.
@@ -18,10 +29,8 @@ void drawScene() {
     glTranslatef(board->x, board->y, -2*(8.0f));
     glScalef( board->zoom/4,board->zoom/4,1.0f );
     board->makeBoard();
-    DrawHelper a = DrawHelper();
-    a.push(0,0);
-    a.drawCircle(RGB_BLUE, 1);
-    a.pop();
+    std::string level = "Level : " + std::to_string(board->level);
+    drawBitmapText(level, -BOX_SIZE -2 , BOX_SIZE/2, -16.0f);
 
     // performs a flush and loads
     // the buffer on the screen
@@ -34,7 +43,7 @@ void keyPressHandler(unsigned char key, int x, int y){
     //std::cout <<"keyPressHandler " << key << " " << x << " " << y << std::endl;
     switch (key){
         case ' ':
-            board->fireBall();
+            board->fireBird();
             break;
 
         case 'a':
@@ -53,6 +62,10 @@ void keyPressHandler(unsigned char key, int x, int y){
 
         case 'f':
             board->powerMeter.increaseLevel();
+            break;
+
+        case 'k':
+            board->killBird();
             break;
 
         case '8':
@@ -120,7 +133,16 @@ void mouseHandler(int button, int state, int x, int y){
     // called whenever mouse is clicked, with x and y as mouse pointer location.
     // button = (0 lmb) (1 mmb) (2 rmb) (3 scroll_up) (4 scroll_down)
     // state = 0 if up, 1 if down
-    std::cout<<"mouseHandler "<<button<<" "<<state<<" "<<x<<" "<<y<<std::endl;
+    if (button == 0 and state == 1){
+        board->fireBird();
+    }
+    if (button == 3 and state == 1){
+        board->zoom += 1;
+    }
+    if (button == 4 and state == 1){
+        board->zoom -= 1;
+    }
+    //std::cout<<"mouseHandler "<<button<<" "<<state<<" "<<x<<" "<<y<<std::endl;
 }
 
 void dragHandler(int x, int y){
@@ -131,7 +153,23 @@ void dragHandler(int x, int y){
 void pointerHandler(int x, int y){
     double X = x;
     double Y = y;
-    std::cout<<"pointerHandler "<< X << " "  << Y << " " << glutGet(GLUT_WINDOW_X) << " " << glutGet(GLUT_WINDOW_Y)<< " " << X/Y << " " << RAD2DEG(tan(DEG2RAD(X/Y))) <<std::endl;
+    double Z = 0;
+    double cannX, cannY, cannZ;
+
+    double modelMatrix[16];
+    double projMatrix[16];
+    GLint viewport[4];
+
+    glGetIntegerv( GL_VIEWPORT, viewport );
+    glGetDoublev( GL_MODELVIEW_MATRIX, modelMatrix );
+    glGetDoublev( GL_PROJECTION_MATRIX, projMatrix );
+
+
+    gluUnProject(-BOX_SIZE/2-2, -BOX_SIZE/2-1, 0, modelMatrix, projMatrix, viewport, &cannX, &cannY, &cannZ);
+    gluUnProject(x,y,0,modelMatrix, projMatrix, viewport, &X, &Y, &Z);
+    //double xx = X-cannX, yy = Y -cannY;
+    //std::cout<<"pointerHandler "<< X << " "  << Y << " " << cannX << " " << cannY << std::endl;
+    //std::cout<<"Distance" << xx << " " << yy << " " << xx/yy << " " << tan(DEG2RAD(xx/yy)) << std::endl;
     //board->cannon.changeAngleAbs((float) tan(DEG2RAD( X/Y)));
 }
 

@@ -71,6 +71,24 @@ void DrawHelper::drawCircle(float color1, float color2, float color3, float rad)
     this->drawEllipse(color1, color2, color3, rad, rad);
 }
 
+void DrawHelper::drawCircleFilled(float color1, float color2, float color3, float rad) {
+    float radX = rad, radY = rad;
+    int i;
+
+    glColor3f(color1, color2, color3);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glBegin(GL_POLYGON);
+
+
+    for(i=0;i<360;i++)
+    {
+        float rad = DEG2RAD(i);
+        glVertex2f((GLfloat) cos(rad) * radX, (GLfloat) sin(rad) * radY);
+    }
+
+    glEnd();
+}
+
 void DrawHelper::push(float x, float y){
     glPushMatrix();
     glTranslatef(x, y, -2*(8.0f));

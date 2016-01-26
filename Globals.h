@@ -28,6 +28,7 @@
 #define RGB_WHITE 1.0f,1.0f,1.0f
 #define RGB_RED 1.0f,0.0f,0.0f
 #define RGB_BLUE 0.0f,0.0f,1.0f
+#define RGB_YELLOW 1.0f,1.0f,0.0f
 
 #define RGB_GRAY 0.18431f,0.30980f,0.30980f
 
@@ -51,5 +52,7 @@
 #define frictionY 0.001
 
 #define errorY 1
+
+#define COEFFICIENT_OF_RESTITUTION 1;
 
 #endif //ANGRYBIRDS_GLOBALS_H

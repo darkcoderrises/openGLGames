@@ -11,12 +11,15 @@ void fill(std::vector<float> *color, float color1, float color2, float color3){
 
 Board::Board() {
     this->cannon = Cannon();
-    this->birds.push_back(Bird());
-    this->birds.push_back(Bird());
-    this->birds.push_back(Bird());
 
-    for (int i=0;i<3;i++)
-        this->birds[i].setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+    for (int i=0;i<3;i++) {
+        this->birds.push_back(Bird());
+        this->birds[i].setBird(this->cannon.angle, -BOX_SIZE / 2 - 2, -BOX_SIZE / 2 - 1);
+    }
+
+    for(int i=0;i<5;i++){
+        this->obstacles.push_back(Obstacle());
+    }
 
     this->in_progress = false;
 
@@ -45,7 +48,7 @@ Board::Board() {
     this->zoom = 7;
     this->x = 0;
     this->y = 0;
-    this->level = 0;
+    this->level = 1;
 }
 
 Board::~Board() {
@@ -85,17 +88,59 @@ void Board::makeBoard() {
 
     if (erase)
         this->birds.erase(this->birds.begin());
+
     this->powerMeter.drawMeter();
     this->lives.drawMeter();
 
+    for(int i=0;i<(signed) this->obstacles.size();i++){
+        this->obstacles[i].moveObstacle();
+        this->obstacles[i].drawObstacle();
+    }
 
     if (this->birds.size()>0)
         this->birds[0].drawBird();
 
 }
 
-float distance(float x1, float y1, float x2, float y2){
+float dist(float x1, float y1, float x2, float y2){
     return ((float) sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)));
+}
+
+void Board::handleCollisionBetweenObjects() {
+    int size = (signed) this->obstacles.size();
+    for(int i=0;i<size; i++){
+        Obstacle o1 = this->obstacles[i];
+
+        if (this->birds[0].moving and !this->birds[0].stop) {
+            Bird b1 = this->birds[0];
+            if (dist(o1.x, o1.y, b1.x, b1.y) <= (o1.rad + b1.rad)) {
+                o1.velX = (o1.velX * 2 + b1.velX) / 3;
+                b1.velX = o1.velX;
+
+                o1.velY = (o1.velY * 2 + b1.velY) / 3;
+                b1.velY = o1.velY;
+            }
+            this->birds[0] = b1;
+        }
+
+        for(int j=i+1;j<size;j++){
+            Obstacle o2=this->obstacles[j];
+            if (dist(o1.x, o1.y, o2.x, o2.y)<=(o1.rad+o2.rad)){
+                float velx, vely;
+                velx = o1.velX;
+                vely = o1.velY;
+
+                o1.velX = o2.velX;
+                o1.velY = o2.velY;
+
+                o2.velX = velx;
+                o2.velY = vely;
+            }
+            this->obstacles[j] = o2;
+
+        }
+        this->obstacles[i] = o1;
+    }
 }
 
 void Board::handleCollision() {
@@ -103,16 +148,18 @@ void Board::handleCollision() {
     Blocks block = this->blocks[0];
     Bird bird = this->birds[0];
 
-    if(distance(bird.x, bird.y, block.x, block.y) <= (bird.rad+block.rad)){
+    if(dist(bird.x, bird.y, block.x, block.y) <= (bird.rad + block.rad)){
         this->level+=1;
         this->map = Map();
         this->birds[0] = Bird();
         this->blocks[0] = Blocks(this->map.setObj());
+        this->obstacles.push_back(Obstacle());
         this->in_progress = false;
     }
+    this->handleCollisionBetweenObjects();
 }
 
-void Board::fireBall() {
+void Board::fireBird() {
     if (this->in_progress) return;
 
     if (this->birds.size()>0) {
@@ -123,4 +170,11 @@ void Board::fireBall() {
         this->birds[0].velX *= this->powerMeter.currLevel * this->powerMeter.currLevel * cos(DEG2RAD(this->cannon.angle));
         this->birds[0].velY *= this->powerMeter.currLevel * this->powerMeter.currLevel * sin(DEG2RAD(this->cannon.angle));
     }
+}
+
+void Board::killBird(){
+    if (this->birds.size()==0)return;
+    this->in_progress = false;
+    this->birds.erase(this->birds.begin());
+    this->lives.decreaseLevel();
 }

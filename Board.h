@@ -12,6 +12,7 @@
 #include "Blocks.h"
 #include "Meters.h"
 #include "Map.h"
+#include "Obstacle.h"
 
 class Board {
     public:
@@ -29,10 +30,13 @@ class Board {
         Meters powerMeter;
         Meters lives;
         Map map;
+        std::vector<Obstacle> obstacles;
 
         void makeBoard();
         void handleCollision();
-        void fireBall();
+        void handleCollisionBetweenObjects();
+        void fireBird();
+        void killBird();
 
 };
 

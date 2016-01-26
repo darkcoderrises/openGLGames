@@ -13,6 +13,7 @@ public:
     void drawRectangeEmpty(float color1, float color2, float color3, float length, float breadth);
     void drawEllipse(float color1, float color2, float color3, float radX, float radY);
     void drawCircle(float color1, float color2, float color3, float rad);
+    void drawCircleFilled(float color1, float color2, float color3, float rad);
 
     void push(float x, float y);
     void pop();
