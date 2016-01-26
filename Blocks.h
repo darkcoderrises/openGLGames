@@ -11,6 +11,7 @@
 class Blocks : public Object{
     public:
         Blocks();
+        Blocks(Object);
 
         void drawBlock();
         void checkFall();

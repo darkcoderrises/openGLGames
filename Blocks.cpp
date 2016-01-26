@@ -15,6 +15,13 @@ Blocks::Blocks(){
     this->y = -1 * (rand() % ((int) BOX_SIZE-1));
 }
 
+Blocks::Blocks(Object object){
+    this->moveable = false;
+    this->rad = object.rad;
+    this->x = object.x;
+    this->y = object.y;
+}
+
 void Blocks::drawBlock() {
     DrawHelper a = DrawHelper();
     this->checkFall();

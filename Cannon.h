@@ -16,6 +16,7 @@ class Cannon {
 
         void drawCannon();
         void changeAngle(float change);
+        void changeAngleAbs(float change);
 };
 
 

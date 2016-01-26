@@ -18,8 +18,6 @@ Board::Board() {
     for (int i=0;i<3;i++)
         this->birds[i].setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
 
-    this->blocks.push_back(Blocks());
-
     this->in_progress = false;
 
     std::vector<float> colors[3];
@@ -32,8 +30,6 @@ Board::Board() {
     fill(colors1, RGB_RED);
     fill(colors1, RGB_BLUE);
 
-
-
     Meters power = Meters();
     power.init( -BOX_SIZE -1, -4, 1, 5, 3, 3, colors);
 
@@ -44,11 +40,12 @@ Board::Board() {
     this->lives = life;
 
     this->map = Map();
+    this->blocks.push_back(Blocks(this->map.setObj()));
 
     this->zoom = 7;
     this->x = 0;
     this->y = 0;
-
+    this->level = 0;
 }
 
 Board::~Board() {
@@ -67,7 +64,7 @@ void Board::makeBoard() {
     this->map.drawRandom();
 
     for (int i=0; i<(signed) this->blocks.size(); i++){
-        //this->blocks[i].drawBlock();
+        this->blocks[i].drawBlock();
     }
 
     bool erase = false;
@@ -95,4 +92,35 @@ void Board::makeBoard() {
     if (this->birds.size()>0)
         this->birds[0].drawBird();
 
+}
+
+float distance(float x1, float y1, float x2, float y2){
+    return ((float) sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)));
+}
+
+void Board::handleCollision() {
+    if(this->birds.size()==0)return;
+    Blocks block = this->blocks[0];
+    Bird bird = this->birds[0];
+
+    if(distance(bird.x, bird.y, block.x, block.y) <= (bird.rad+block.rad)){
+        this->level+=1;
+        this->map = Map();
+        this->birds[0] = Bird();
+        this->blocks[0] = Blocks(this->map.setObj());
+        this->in_progress = false;
+    }
+}
+
+void Board::fireBall() {
+    if (this->in_progress) return;
+
+    if (this->birds.size()>0) {
+        this->birds[0].setBird(this->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+        this->birds[0].moving = true;
+        this->in_progress = true;
+
+        this->birds[0].velX *= this->powerMeter.currLevel * this->powerMeter.currLevel * cos(DEG2RAD(this->cannon.angle));
+        this->birds[0].velY *= this->powerMeter.currLevel * this->powerMeter.currLevel * sin(DEG2RAD(this->cannon.angle));
+    }
 }

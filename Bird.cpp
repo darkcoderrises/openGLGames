@@ -48,7 +48,7 @@ void Bird::moveBird() {
     if (this->velY<0) this->velY+=2*frictionY; this->velY-=frictionY;
     if (this->velX<0) this->velX+=2*frictionX; this->velX-=frictionX;
 
-    if ( fabs(this->velX) < 0.0001  and this->onGround()) {this->stop = true;}
+    if ( fabs(this->velX) < 0.0003 and this->onGround()) {this->stop = true;}
 }
 
 class vec2 {
@@ -90,6 +90,8 @@ void Bird::checkCollision(Map map) {
 
         velY *= -1;
         if (check) velX *= -1;
+
+        if (fabs(velX) < 0.0003) { this->stop = true; }
 
     }
 }

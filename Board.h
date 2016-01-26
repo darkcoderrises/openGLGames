@@ -21,6 +21,7 @@ class Board {
         float zoom;
         float x, y;
         bool in_progress;
+        int level;
 
         Cannon cannon;
         std::vector<Bird> birds;
@@ -30,6 +31,8 @@ class Board {
         Map map;
 
         void makeBoard();
+        void handleCollision();
+        void fireBall();
 
 };
 

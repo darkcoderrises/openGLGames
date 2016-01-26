@@ -6,7 +6,7 @@
 #include "DrawHelper.h"
 
 Cannon::Cannon(){
-    this->angle = 30.0f;
+    this->angle = MIN_ANGLE;
 }
 
 Cannon::~Cannon(){
@@ -40,4 +40,9 @@ void Cannon::changeAngle(float change) {
     this->angle += change;
     if (angle>MAX_ANGLE or angle<MIN_ANGLE)
         this->angle -= change;
+}
+
+void Cannon::changeAngleAbs(float change) {
+    this->angle = change;
+    //this->angle = std::min(MAX_ANGLE, std::max(MIN_ANGLE, change));
 }

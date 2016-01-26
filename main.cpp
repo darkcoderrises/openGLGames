@@ -18,6 +18,10 @@ void drawScene() {
     glTranslatef(board->x, board->y, -2*(8.0f));
     glScalef( board->zoom/4,board->zoom/4,1.0f );
     board->makeBoard();
+    DrawHelper a = DrawHelper();
+    a.push(0,0);
+    a.drawCircle(RGB_BLUE, 1);
+    a.pop();
 
     // performs a flush and loads
     // the buffer on the screen
@@ -30,27 +34,17 @@ void keyPressHandler(unsigned char key, int x, int y){
     //std::cout <<"keyPressHandler " << key << " " << x << " " << y << std::endl;
     switch (key){
         case ' ':
-            if (board->in_progress) break;
-
-            if (board->birds.size()>0) {
-                board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
-                board->birds[0].moving = true;
-                board->in_progress = true;
-
-                board->birds[0].velX *= board->powerMeter.currLevel * board->powerMeter.currLevel;
-                board->birds[0].velY *= board->powerMeter.currLevel * board->powerMeter.currLevel;
-            }
-
+            board->fireBall();
             break;
 
         case 'a':
             board->cannon.changeAngle(1.0f);
-            if (board->birds.size()>0) board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+            if (board->birds.size()>0 and !board->birds[0].moving) board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
             break;
 
         case 'b':
             board->cannon.changeAngle(-1.0f);
-            if (board->birds.size()>0) board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
+            if (board->birds.size()>0 and !board->birds[0].moving) board->birds[0].setBird(board->cannon.angle, -BOX_SIZE/2-2 , -BOX_SIZE/2-1);
             break;
 
         case 's':
@@ -134,6 +128,13 @@ void dragHandler(int x, int y){
     std::cout<<"dragHandler "<<x<<" "<<y<<std::endl;
 }
 
+void pointerHandler(int x, int y){
+    double X = x;
+    double Y = y;
+    std::cout<<"pointerHandler "<< X << " "  << Y << " " << glutGet(GLUT_WINDOW_X) << " " << glutGet(GLUT_WINDOW_Y)<< " " << X/Y << " " << RAD2DEG(tan(DEG2RAD(X/Y))) <<std::endl;
+    //board->cannon.changeAngleAbs((float) tan(DEG2RAD( X/Y)));
+}
+
 void updateScene(int value) {
     // The frame divisions is actually a
     // crude hack to make the collisions more
@@ -143,7 +144,7 @@ void updateScene(int value) {
     //std::cout<<value<<std::endl;
 
     for(int i = 0; i < FRAME_DIVISIONS; i++) {
-        //board->handleCollision();
+        board->handleCollision();
         //board->updatePositions();
     }
     // We call the update every millisecond.
@@ -176,6 +177,7 @@ int main(int argc, char **argv) {
 
     glutMouseFunc(mouseHandler);
     glutMotionFunc(dragHandler);
+    glutPassiveMotionFunc(pointerHandler);
 
     glutReshapeFunc(resizeHandler);
 

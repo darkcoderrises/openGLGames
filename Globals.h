@@ -42,13 +42,13 @@
 
 #define BOX_SIZE 8.0f
 
-#define MIN_ANGLE 30.0f
+#define MIN_ANGLE 10.0f
 #define MAX_ANGLE 70.0f
 
 #define accY 0.005
 
-#define frictionX 0.0001
-#define frictionY 0.0001
+#define frictionX 0.001
+#define frictionY 0.001
 
 #define errorY 1
 

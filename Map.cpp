@@ -18,7 +18,7 @@ Map::Map(){
     this->level = rand() % (max_level/3) + 1;
 
     float l = 2 * BOX_SIZE / this->max_level;
-
+    srand(time(NULL));
     for (int i=0; i<4; i++){
         this->heigths.push_back(RandomFloat(l*(3*i+1), l*(3*i+2)) - BOX_SIZE);
     }
@@ -137,6 +137,11 @@ void Map::drawRandom() {
 
 Object Map::setObj() {
     Object a = Object();
+    srand(time(NULL));
+    int hi = rand()%3;
+    a.y = this->heigths[hi] + (float)1.26;
+    a.x = RandomFloat(this->breadths[hi] + 1, BOX_SIZE -1);
 
+    a.rad=1;
     return a;
 }
