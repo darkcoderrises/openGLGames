@@ -16,6 +16,7 @@ void drawScene() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    glTranslatef(board->x, board->y, -16.0f);
     board->drawBoard();
 
     // performs a flush and loads
@@ -37,6 +38,20 @@ void resizeHandler(int w, int h) {
 }
 
 void specialKeyPressHandler(int key, int x, int y) {
+    switch (key){
+        case 100:
+            board->x -= 1;
+            break;
+        case 101:
+            board->y += 1;
+            break;
+        case 102:
+            board->x += 1;
+            break;
+        case 103:
+            board->y -= 1;
+            break;
+    }
 }
 
 void mouseHandler(int button, int state, int x, int y) {

@@ -18,7 +18,7 @@ public:
     void drawCuboid(float color[][3], float l, float b, float h);
     void drawCube(float color[][3], float size);
 
-    void push(float x, float y);
+    void push(float x, float y, float z=-10.0f);
     void pop();
 };
 

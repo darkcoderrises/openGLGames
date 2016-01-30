@@ -139,7 +139,7 @@ void DrawHelper::drawCube(float color[][3], float size){
     this->drawCuboid(color, size, size, size);
 }
 
-void DrawHelper::push(float x, float y){
+void DrawHelper::push(float x, float y, float z){
     glPushMatrix();
     glTranslatef(x, y, -2*(8.0f));
 }
