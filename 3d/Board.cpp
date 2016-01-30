@@ -12,8 +12,8 @@ Board::Board() {
     for (int i=0;i<10;i++){
         for(int j=0;j<10;j++){
             cells[i][j] = Cell();
-            cells[i][j].x =i*(float)2.1;
-            cells[i][j].y =j*(float)2.1;
+            cells[i][j].x =i*(float)2;
+            cells[i][j].y =j*(float)2;
 
             cells[i][j].l=2;
             cells[i][j].b=2;

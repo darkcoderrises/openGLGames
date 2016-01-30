@@ -24,9 +24,6 @@ void drawScene() {
     glutSwapBuffers();
 }
 
-void keyPressHandler(unsigned char key, int x, int y){
-
-}
 
 void resizeHandler(int w, int h) {
     glViewport(0, 0, w, h);
@@ -35,6 +32,20 @@ void resizeHandler(int w, int h) {
     gluPerspective(45.0f, (float)w / (float)h, 0.1f, 200.0f);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+}
+
+void keyPressHandler(unsigned char key, int x, int y){
+    switch (key){
+        case 'c':
+        std::cout<<"HI"<<std::endl;
+            gluLookAt(-5,-5,-5,
+            0,0,-10.f,
+            0,1,0
+            );
+            break;
+        default:
+            break;
+    }
 }
 
 void specialKeyPressHandler(int key, int x, int y) {
@@ -50,6 +61,8 @@ void specialKeyPressHandler(int key, int x, int y) {
             break;
         case 103:
             board->y -= 1;
+            break;
+        default:
             break;
     }
 }
